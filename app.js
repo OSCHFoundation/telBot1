@@ -5,11 +5,28 @@ const TelegramBot = require('node-telegram-bot-api');
 const token = '468162909:AAEwDuyiOInIE-0A8Zptqr-jhy7Box4kPIY';
 
 // Create a bot that uses 'polling' to fetch new updates
-const bot = new TelegramBot(token, {polling: true});
+
+const options = {
+  webHook: {
+    port: 443,
+    key: './key.pem', // Path to file with PEM private key
+    cert: './crt.pem'
+  }
+};
+
+
+const bot = new TelegramBot(token, options);
 
 
 // Listen for any kind of message. There are different kinds of
 // messages.
+const url = 'https://t.me/OSChain5bot/bot468162909:AAEwDuyiOInIE-0A8Zptqr-jhy7Box4kPIY';
+
+bot.setWebHook(url, {
+  certificate: './crt.pem',
+});
+
+
 bot.on('message', (msg) => {
 console.log('mess');
   const chatId = msg.chat.id;
