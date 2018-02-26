@@ -1,20 +1,18 @@
-var ajax = require('superagent');
 const TelegramBot = require('node-telegram-bot-api');
+var ajax = require('superagent');
 
 // replace the value below with the Telegram token you receive from @BotFather
 const token = '468162909:AAEwDuyiOInIE-0A8Zptqr-jhy7Box4kPIY';
 
 // Create a bot that uses 'polling' to fetch new updates
-
+var fs = require('fs');
 const options = {
   webHook: {
     port: 443,
-    key: './key.pem', // Path to file with PEM private key
-    cert: './crt.pem'
+    key: fs.readFileSync('./key.pem', 'utf8'), // Path to file with PEM private key
+    cert: fs.readFileSync('./crt.pem', 'utf8')
   }
 };
-
-
 const bot = new TelegramBot(token, options);
 
 
@@ -23,7 +21,7 @@ const bot = new TelegramBot(token, options);
 const url = 'https://t.me/OSChain5bot/bot468162909:AAEwDuyiOInIE-0A8Zptqr-jhy7Box4kPIY';
 
 bot.setWebHook(url, {
-  certificate: './crt.pem',
+  certificate: options.webHook.cert
 });
 
 
