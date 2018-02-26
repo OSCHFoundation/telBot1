@@ -1,3 +1,4 @@
+var ajax = require('superagent');
 const TelegramBot = require('node-telegram-bot-api');
 
 // replace the value below with the Telegram token you receive from @BotFather
@@ -10,6 +11,7 @@ const bot = new TelegramBot(token, {polling: true});
 // Listen for any kind of message. There are different kinds of
 // messages.
 bot.on('message', (msg) => {
+console.log('mess');
   const chatId = msg.chat.id;
   var textMsg = msg.text.substring(1,msg.text.length);
   ajax.post('http://127.0.0.1/jfinal_demo/distribution')
@@ -17,7 +19,7 @@ bot.on('message', (msg) => {
     .set('X-API-Key', 'foobar')
     .set('Accept', 'application/json')
     .end(function(err, res) {
-      console.log(res.body);
+      console.log('success');
       const opts = {
         reply_to_message_id: msg.message_id,
         parse_mode: 'HTML'
