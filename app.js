@@ -51,6 +51,10 @@ bot.onText(/^\/.{6}/, function onPhotoText(msg) {
   console.log(msg.text);
   if(msg.text){
   var textMsg = msg.text.substring(1,msg.text.length);
+  console.log(msg.from.id);
+  console.log(msg.from.is_bot);
+  console.log(msg.from.username);
+  
   ajax.post('http://127.0.0.1/jfinal_demo/distribution')
   .send({ 
     code: textMsg,
