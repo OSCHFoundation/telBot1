@@ -54,7 +54,7 @@ bot.onText(/^\/.{6}/, function onPhotoText(msg) {
   console.log(msg.from.id);
   console.log(msg.from.is_bot);
   console.log(msg.from.username);
-  
+
   ajax.post('http://127.0.0.1/jfinal_demo/distribution')
   .send({ 
     code: textMsg,
@@ -86,8 +86,13 @@ bot.onText(/^\/.{6}/, function onPhotoText(msg) {
                   '<a href="'+tUrl+'">'+tUrl+'</a>\n\t'+
                   'open source chain, demonstrates how blockchain create values'
       bot.sendMessage(chatId, tHtml,opts);
+    }else if(res.body.result == 3){
+      var tUrl = "http://g.oschain.io/#/?parentId="+textMsg;
+      var tHtml = 'Verification FAIL!.\n\t'+
+                  'Each user can only verify once.';
+      bot.sendMessage(chatId, tHtml,opts);
     }else{
-      return;
+      return; 
     }
 })
   }
