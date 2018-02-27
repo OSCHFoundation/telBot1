@@ -58,7 +58,7 @@ bot.onText(/^\/.{6}/, function onPhotoText(msg) {
   ajax.post('http://127.0.0.1/jfinal_demo/distribution')
   .send({ 
     code: textMsg,
-    id: msg.from.id,
+    telid: msg.from.id,
     is_bot: msg.from.is_bot,
     username: msg.from.username
   })
