@@ -55,7 +55,7 @@ bot.onText(/^\/.{6}/, function onPhotoText(msg) {
   console.log(msg.from.is_bot);
   console.log(msg.from.username);
 
-  ajax.post('http://127.0.0.1/jfinal_demo/distribution')
+  ajax.post('http://18.222.50.156/inland_jfinal_demo/distribution')
   .send({ 
     code: textMsg,
     telid: msg.from.id,
@@ -65,7 +65,8 @@ bot.onText(/^\/.{6}/, function onPhotoText(msg) {
   .set('X-API-Key', 'foobar')
   .set('Accept', 'application/json')
   .end(function(err, res) {
-  console.log('success');
+	console.log(res.body);
+	console.log(err);
     const opts = {
       reply_to_message_id: msg.message_id,
       parse_mode: 'HTML'
