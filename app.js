@@ -2,7 +2,7 @@ var ajax = require('superagent');
 const TelegramBot = require('node-telegram-bot-api');
  
 // replace the value below with the Telegram token you receive from @BotFather
-const token = '555911521:AAE3x_oR2czCGxV4aVs6XV-hBuP6daqT5NU';
+const token = '519373406:AAEV0Uva5a0TBdxrHwWRmEaGKx98F_SRD3Q';
  
 // Create a bot that uses 'polling' to fetch new updates
 var option = {
@@ -51,13 +51,21 @@ bot.onText(/^\/.{6}/, function onPhotoText(msg) {
   console.log(msg.text);
   if(msg.text){
   var textMsg = msg.text.substring(1,msg.text.length);
+ var userName = "123";
+        if(msg.from.username){
+                userName = msg.from.username;
+        }else if(msg.from.first_name){
+                userName = msg.from.first_name;
 
-  ajax.post('http://18.222.50.156/inland_jfinal_demo/distribution')
+        }
+
+
+  ajax.post('http://127.0.0.1/jfinal_demo/distribution')
   .send({ 
     code: textMsg,
     telid: msg.from.id,
     is_bot: msg.from.is_bot,
-    username: msg.from.username
+    username: userName
   })
   .set('X-API-Key', 'foobar')
   .set('Accept', 'application/json')
