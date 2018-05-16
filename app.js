@@ -46,11 +46,70 @@ const bot = new TelegramBot(token, option);
 
 // Listen for any kind of message. There are different kinds of
 // messages.
+
+const phArr = [];
+for(var i=1; i<10; i++){
+  phArr.push("./static/"+i+".jpg")
+}
+bot.onText(/\/photo/, function onPhotoText(msg) {
+  let photo = `${__dirname}/static/photo.gif`;
+  let phIndex = parseInt(Math.random()*10);
+  let phUrl = phArr[phIndex]; 
+console.log(phUrl);
+  bot.sendPhoto(msg.chat.id, phUrl, {
+    caption: "I'm OSCH bot!"
+  });
+});
+//敏感词检测
+//bot.onText(/123/, function onPhotoText(msg) {
+//  console.log(msg.chat.id);  
+//  console.log(msg);
+//
+//  bot.sendMessage(msg.chat.id,"你发的是广告，正在执行移出群程序").then((res)=>{
+//    bot.kickChatMember(msg.chat.id,msg.from.id).then((res)=>{
+//      console.log(res);
+//    })
+//  })
+//})
+bot.onText(/[\s\S]*/, function onAnyText(msg){
+  if(msg.from.is_bot){
+    bot.kickChatMember(msg.chat.id,msg.from.id).then((res)=>{
+      console.log(res);
+    })
+  }else{
+    let ranNum = Math.random();
+    let opts = {
+      //   reply_to_message_id: msg.message_id,
+      parse_mode: 'HTML'
+    };
+    let html = '重大消息：开源链已经登入两家主流交易所\n\t'+
+               '新加坡交易所：<a href="https://www.digifinex.com">digifinex</a>\n\t'+
+               '日本交易所：<a href="https://ex.btcbox.com/">BoxEx:</a>\n\t'+
+               '欢迎大家在官方地址交易'
+    if(ranNum>0.9){
+      bot.sendMessage(msg.chat.id, html, opts)
+    }
+  }
+})
+bot.onText(/\introduce/,function onIntroduce(msg){
+  let opts = {
+ //   reply_to_message_id: msg.message_id,
+    parse_mode: 'HTML'
+  };
+  let html = 'Open Source Chain is the world’s first IP marketplace powered by blockchain technology, and Open Source philosophy.'+
+             'Engineers, IC designers, and hardware manufacturers can learn, share, trade and further develop these crystalized wisdom and be rewarded from token appreciation,'+
+                    'Using public shared digital ledger, OSCH unites industry participants and streamlines design, sales, and production processes.'+
+                    'Participation from stakeholders mint tokens, and communal positive behavior enhance token value.';
+  bot.sendMessage(msg.chat.id,html,opts)
+})
+bot.onText(/\help/,function onHelpText(msg){
+  bot.sendMessage(msg.chat.id,"我也帮不了你什么")  
+})
 bot.onText(/^\/.{6}/, function onPhotoText(msg) {
    const chatId = msg.chat.id;
   console.log(msg.text);
   //msg.text
-console.log(msg);
+  console.log(msg);
   if(false){
     var textMsg = msg.text.substring(1,msg.text.length);
     var userName = "123";
