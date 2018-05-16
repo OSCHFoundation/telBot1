@@ -55,8 +55,14 @@ bot.onText(/\/photo/, function onPhotoText(msg) {
   let photo = `${__dirname}/static/photo.gif`;
   let phIndex = parseInt(Math.random()*10);
   let phUrl = phArr[phIndex]; 
-console.log(phUrl);
+  console.log(phUrl);
   bot.sendPhoto(msg.chat.id, phUrl, {
+    caption: "I'm OSCH bot!"
+  });
+});
+bot.onText(/\/video/, function onVideoText(msg) {
+  let video = `${__dirname}/static/video.mp4`;
+  bot.sendVideo(msg.chat.id, video, {
     caption: "I'm OSCH bot!"
   });
 });
@@ -86,7 +92,7 @@ bot.onText(/[\s\S]*/, function onAnyText(msg){
                '新加坡交易所：<a href="https://www.digifinex.com">digifinex</a>\n\t'+
                '日本交易所：<a href="https://ex.btcbox.com/">BoxEx:</a>\n\t'+
                '欢迎大家在官方地址交易'
-    if(ranNum>0.9){
+    if(ranNum>0.5){
       bot.sendMessage(msg.chat.id, html, opts)
     }
   }
@@ -105,6 +111,7 @@ bot.onText(/\introduce/,function onIntroduce(msg){
 bot.onText(/\help/,function onHelpText(msg){
   bot.sendMessage(msg.chat.id,"我也帮不了你什么")  
 })
+/*
 bot.onText(/^\/.{6}/, function onPhotoText(msg) {
    const chatId = msg.chat.id;
   console.log(msg.text);
@@ -159,8 +166,7 @@ bot.onText(/^\/.{6}/, function onPhotoText(msg) {
     })
   }
 });
-
-
+*/
 bot.on('polling_error', (error) => {
    console.log(error);  // => 'EFATAL'
 });
