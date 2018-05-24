@@ -48,6 +48,18 @@ const bot = new TelegramBot(token, option);
 // Listen for any kind of message. There are different kinds of
 // messages.
 
+bot.on('message', (msg) => {
+  var robot = "I have not received my token";
+  if (msg.text.indexOf(robot) === 0) {
+      bot.sendMessage(msg.chat.id, "we are still distributing tokens, pls wait patiently.");
+  }
+  var otherQue = "I have other questions";
+  if (msg.text.indexOf(otherQue) === 0) {
+      bot.sendMessage(msg.chat.id, "Has helped you to call the customer service, please wait.");
+  }
+});
+
+
 const phArr = [];
 for(var i=1; i<10; i++){
   phArr.push("./static/"+i+".jpg")
@@ -81,6 +93,14 @@ bot.onText(/\/video/, function onVideoText(msg) {
     caption: "I'm OSCH bot!"
   });
 });
+bot.onText(/\/help/, (msg)=>{
+	console.log('success');
+	bot.sendMessage(msg.chat.id, "Welcome", {
+            "reply_markup": {
+	    "keyboard": [["I have not received my token"],["I have other questions"]]
+	    }
+	});    
+})
 //敏感词检测
 //bot.onText(/123/, function onPhotoText(msg) {
 //  console.log(msg.chat.id);  
@@ -94,34 +114,33 @@ bot.onText(/\/video/, function onVideoText(msg) {
 //})
 //
 //
-bot.onText(/\address/, function onContractText(msg){
-
-  bot.sendMessage(msg.chat.id,"0xf46f98a8f6032914921ae9cfb5aaab5083bd9376"); 
+bot.onText(/\/address/, function onContractText(msg){
+  bot.sendMessage(msg.chat.id,"OpenSourceChain Contract:0xf46f98a8f6032914921ae9cfb5aaab5083bd9376"); 
 })
-bot.onText(/[\s\S]*/, function onAnyText(msg){
-  if(msg.from.is_bot){
-    bot.kickChatMember(msg.chat.id,msg.from.id).then((res)=>{
-      console.log(res);
-    })
-  }else{
-    let ranNum = Math.random();
-    let opts = {
-      //   reply_to_message_id: msg.message_id,
-      parse_mode: 'HTML'
-    };
-    let html = 'Major news: Open source chain has logged in two major exchanges\n\t'+
-               'Japan Exchange：<a href="https://ex.btcbox.com/">BoxEx</a>\n\t'+
-               'Singapore Exchange：<a href="https://www.digifinex.com">digifinex</a>\n\t'+
-               'Welcome everyone trading at the official address\n\t'+
-               'DigiFinex Digital Currency Exchange - Bitcoin, Litecoin, Ethereum and other blockchain asset trading platforms\n\t'+
-               'DigiFinex Exchange'
-    if(ranNum>0.92){
-      bot.sendMessage(msg.chat.id, html, opts)
-    }
-  }
-})
+//bot.onText(/[\s\S]*/, function onAnyText(msg){
+//  if(msg.from.is_bot){
+//    bot.kickChatMember(msg.chat.id,msg.from.id).then((res)=>{
+//      console.log(res);
+//    })
+//  }else{
+//    let ranNum = Math.random();
+//    let opts = {
+//      //   reply_to_message_id: msg.message_id,
+//      parse_mode: 'HTML'
+//    };
+//    let html = 'Major news: Open source chain has logged in two major exchanges\n\t'+
+//               'Japan Exchange：<a href="https://ex.btcbox.com/">BoxEx</a>\n\t'+
+//               'Singapore Exchange：<a href="https://www.digifinex.com">digifinex</a>\n\t'+
+//               'Welcome everyone trading at the official address\n\t'+
+//               'DigiFinex Digital Currency Exchange - Bitcoin, Litecoin, Ethereum and other blockchain asset trading platforms\n\t'+
+//               'DigiFinex Exchange'
+//    if(ranNum>0.92){
+//      bot.sendMessage(msg.chat.id, html, opts)
+//    }
+//  }
+//})
 
-bot.onText(/\introduce/,function onIntroduce(msg){
+bot.onText(/\/introduce/,function onIntroduce(msg){
   let opts = {
  //   reply_to_message_id: msg.message_id,
     parse_mode: 'HTML'
@@ -131,9 +150,6 @@ bot.onText(/\introduce/,function onIntroduce(msg){
                     'Using public shared digital ledger, OSCH unites industry participants and streamlines design, sales, and production processes.'+
                     'Participation from stakeholders mint tokens, and communal positive behavior enhance token value.';
   bot.sendMessage(msg.chat.id,html,opts)
-})
-bot.onText(/\help/,function onHelpText(msg){
-  bot.sendMessage(msg.chat.id,"request help")  
 })
 
 /*
