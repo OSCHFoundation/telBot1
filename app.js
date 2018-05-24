@@ -95,7 +95,7 @@ bot.onText(/\/video/, function onVideoText(msg) {
 });
 bot.onText(/\/help/, (msg)=>{
 	console.log('success');
-	bot.sendMessage(msg.chat.id, "Welcome", {
+	bot.sendMessage(msg.chat.id, "How can I help you?", {
             "reply_markup": {
 	    "keyboard": [["I have not received my token"],["I have other questions"]]
 	    }
