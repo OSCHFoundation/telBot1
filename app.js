@@ -1,4 +1,5 @@
 var ajax = require('superagent');
+const Pageres = require('pageres'); 
 const TelegramBot = require('node-telegram-bot-api');
  
 // replace the value below with the Telegram token you receive from @BotFather
@@ -60,6 +61,20 @@ bot.onText(/\/photo/, function onPhotoText(msg) {
     caption: "I'm OSCH bot!"
   });
 });
+bot.onText(/\/price/, function onPhotoText(msg) {
+console.log(__dirname)
+  const pageres = new Pageres({delay: 2,filename: "offer"})
+//https://www.digifinex.com/trade/ETH/OSCH
+     .src('https://www.digifinex.com/trade/ETH/OSCH', [ '1920x1080'])
+     .dest(__dirname)
+     .run()
+     .then(function(){
+        console.log('success')
+         bot.sendPhoto(msg.chat.id, './offer.png', {
+            caption: "Real-time prices, see below the transaction price."
+        });
+    });
+});
 bot.onText(/\/video/, function onVideoText(msg) {
   let video = `${__dirname}/static/video.mp4`;
   bot.sendVideo(msg.chat.id, video, {
@@ -77,6 +92,12 @@ bot.onText(/\/video/, function onVideoText(msg) {
 //    })
 //  })
 //})
+//
+//
+bot.onText(/\address/, function onContractText(msg){
+
+  bot.sendMessage(msg.chat.id,"0xf46f98a8f6032914921ae9cfb5aaab5083bd9376"); 
+})
 bot.onText(/[\s\S]*/, function onAnyText(msg){
   if(msg.from.is_bot){
     bot.kickChatMember(msg.chat.id,msg.from.id).then((res)=>{
@@ -88,15 +109,18 @@ bot.onText(/[\s\S]*/, function onAnyText(msg){
       //   reply_to_message_id: msg.message_id,
       parse_mode: 'HTML'
     };
-    let html = '重大消息：开源链已经登入两家主流交易所\n\t'+
-               '新加坡交易所：<a href="https://www.digifinex.com">digifinex</a>\n\t'+
-               '日本交易所：<a href="https://ex.btcbox.com/">BoxEx:</a>\n\t'+
-               '欢迎大家在官方地址交易'
-    if(ranNum>0.5){
+    let html = 'Major news: Open source chain has logged in two major exchanges\n\t'+
+               'Japan Exchange：<a href="https://ex.btcbox.com/">BoxEx</a>\n\t'+
+               'Singapore Exchange：<a href="https://www.digifinex.com">digifinex</a>\n\t'+
+               'Welcome everyone trading at the official address\n\t'+
+               'DigiFinex Digital Currency Exchange - Bitcoin, Litecoin, Ethereum and other blockchain asset trading platforms\n\t'+
+               'DigiFinex Exchange'
+    if(ranNum>0.92){
       bot.sendMessage(msg.chat.id, html, opts)
     }
   }
 })
+
 bot.onText(/\introduce/,function onIntroduce(msg){
   let opts = {
  //   reply_to_message_id: msg.message_id,
@@ -109,8 +133,9 @@ bot.onText(/\introduce/,function onIntroduce(msg){
   bot.sendMessage(msg.chat.id,html,opts)
 })
 bot.onText(/\help/,function onHelpText(msg){
-  bot.sendMessage(msg.chat.id,"我也帮不了你什么")  
+  bot.sendMessage(msg.chat.id,"request help")  
 })
+
 /*
 bot.onText(/^\/.{6}/, function onPhotoText(msg) {
    const chatId = msg.chat.id;
