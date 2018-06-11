@@ -57,6 +57,17 @@ bot.on('message', (msg) => {
   if (msg.text.indexOf(otherQue) === 0) {
       bot.sendMessage(msg.chat.id, "Has helped you to call the customer service, please wait.");
   }
+  var tranQues ="Where can I trade osch?";
+  let opts = {
+      //   reply_to_message_id: msg.message_id,
+     parse_mode: 'HTML'
+   };
+   let html =  'Japan Exchange：<a href="https://ex.btcbox.com/">ex.btcbox.com</a>\n\t'+
+               'Singapore Exchange：<a href="https://www.digifinex.com">www.digifinex.com</a>\n\t'+
+               'Welcome everyone trading at the official address\n\t'
+  if (msg.text.indexOf(tranQues) === 0) {
+      bot.sendMessage(msg.chat.id, html, opts);
+  }
 });
 
 
@@ -97,7 +108,7 @@ bot.onText(/\/help/, (msg)=>{
 	console.log('success');
 	bot.sendMessage(msg.chat.id, "How can I help you?", {
             "reply_markup": {
-	    "keyboard": [["I have not received my token"],["I have other questions"]]
+	    "keyboard": [["I have not received my token"],["Where can I trade osch?"],["I have other questions"]]
 	    }
 	});    
 })
