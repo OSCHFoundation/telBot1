@@ -64,7 +64,7 @@ bot.on('message', (msg) => {
    };
    let html =  'Japan Exchange：<a href="https://ex.btcbox.com/">ex.btcbox.com</a>\n\t'+
                'Singapore Exchange：<a href="https://www.digifinex.com">www.digifinex.com</a>\n\t'+
-               'Australian Exchange：<a href="https://www.topbtc.one">www.topbtc.one</a>\n\t'+
+               'Australian Exchange：<a href="http://www.topbtc.one">www.topbtc.one</a>\n\t'+
                'Welcome everyone trading at the official address\n\t'
   if (msg.text.indexOf(tranQues) === 0) {
       bot.sendMessage(msg.chat.id, html, opts);
